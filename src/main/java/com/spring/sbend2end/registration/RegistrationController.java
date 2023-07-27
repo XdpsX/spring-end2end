@@ -24,7 +24,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") RegistrationRequest registration {
+    public String registerUser(@ModelAttribute("user") RegistrationRequest registration) {
         User user = userService.registerUser(registration);
         // publish the verification email event
         return "redirect:/registration/registration-form?success";
