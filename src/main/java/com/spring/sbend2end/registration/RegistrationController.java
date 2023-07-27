@@ -3,6 +3,8 @@ package com.spring.sbend2end.registration;
 import com.spring.sbend2end.event.RegistrationCompleteEvent;
 import com.spring.sbend2end.user.IUserService;
 import com.spring.sbend2end.user.User;
+import com.spring.sbend2end.utility.UrlUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
@@ -27,10 +29,11 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") RegistrationRequest registration) {
+    public String registerUser(@ModelAttribute("user") RegistrationRequest registration,
+                               HttpServletRequest request) {
         User user = userService.registerUser(registration);
         // publish the verification email event
-//        publisher.publishEvent(new RegistrationCompleteEvent(user, ""));
+        publisher.publishEvent(new RegistrationCompleteEvent(user, UrlUtil.getApplicationUrl(request)));
         return "redirect:/registration/registration-form?success";
     }
 }
