@@ -3,6 +3,7 @@ package com.spring.sbend2end.user;
 import com.spring.sbend2end.registration.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class UserService implements IUserService{
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAllUsers() {
@@ -32,7 +34,7 @@ public class UserService implements IUserService{
                 registration.getFirstName(),
                 registration.getLastName(),
                 registration.getEmail(),
-                registration.getPassword(),
+                passwordEncoder.encode(registration.getPassword()),
                 Arrays.asList(new Role("ROLE_USER"))
         );
         return userRepository.save(user);
