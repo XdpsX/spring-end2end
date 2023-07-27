@@ -30,7 +30,7 @@ public class RegistrationController {
     public String registerUser(@ModelAttribute("user") RegistrationRequest registration) {
         User user = userService.registerUser(registration);
         // publish the verification email event
-        publisher.publishEvent(new RegistrationCompleteEvent(user, ""));
+//        publisher.publishEvent(new RegistrationCompleteEvent(user, ""));
         return "redirect:/registration/registration-form?success";
     }
 }
